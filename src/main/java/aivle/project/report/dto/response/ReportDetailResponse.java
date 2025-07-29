@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 // 상세 조회
 @Data
@@ -18,7 +20,8 @@ public class ReportDetailResponse {
     private String carId;
     private Long inspectionId;
     private String content;
-    private LocalDate createAt;
+    private String summary;
+    private LocalDateTime createdAt;
     private Long workerId;
     private String status;
 
@@ -28,7 +31,7 @@ public class ReportDetailResponse {
                 .carId(report.getCarId())
                 .inspectionId(report.getInspectionId())
                 .content(report.getContent())
-                .createAt(report.getCreateAt())
+                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .workerId(report.getWorkerId())
                 .status(report.getStatus().name())
                 .build();

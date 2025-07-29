@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Map;
 
 @RestController
@@ -56,14 +58,15 @@ public class ReportController {
                 .carId(request.getCarId())
                 .inspectionId(request.getInspectionId())
                 .content(request.getContent())
-                .createAt(LocalDate.now())
+                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .workerId(request.getWorkerId())
+                .type(request.getType())
                 .status(Report.Status.CREATED) // 혹은 SAVED
                 .build();
 
         Report savedReport = reportRepository.save(report);
 
-        return ResponseEntity.ok(Map.of("code", "SUCCESS", "reportId", savedReport.getReportId()));
+        return ResponseEntity.ok(Map.of("reportId", savedReport.getReportId(), "code", "SUCCESS"));
     }
 
 }

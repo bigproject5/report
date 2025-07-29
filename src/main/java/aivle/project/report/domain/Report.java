@@ -5,6 +5,7 @@ import lombok.*;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reports")
@@ -25,15 +26,22 @@ public class Report {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private LocalDate createAt;
+    private LocalDateTime createdAt;
 
     private Long workerId;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    private ReportType type;
+
     public enum Status {
         CREATED, SAVED
+    }
+
+    public enum ReportType {
+        PANEL, PAINT, WIPER, ENGINE
     }
 }
 

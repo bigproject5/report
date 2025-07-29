@@ -1,5 +1,6 @@
 package aivle.project.report.dto.request;
 
+import aivle.project.report.domain.Report;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,6 @@ public class ReportCreateRequest {
     private Long inspectionId;
     private String content;
     private Long workerId;
+    private Report.ReportType type;
 }
 
