@@ -1,0 +1,27 @@
+server:
+  port: ${PORT:8080}
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: report
+
+  jpa:
+    show-sql: false
+    generate-ddl: true
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+        use_sql_comments: false
+        hbm2ddl:
+          auto: create
+    database: mysql
+  profiles:
+    include:
+      - database
+      - local
