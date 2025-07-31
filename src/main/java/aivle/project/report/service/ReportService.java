@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -32,19 +33,35 @@ public class ReportService {
         Report report = reportRepository.findById(reportId)
                 .orElseThrow(ReportNotFoundException::new);
 
-        String summary = gptClient.summarize(report.getContent());
+        if (report.getSummary() == null || report.getSummary().isBlank()) {
+            String summary = gptClient.summarize(report.getContent());
+            report.setSummary(summary);
+            reportRepository.save(report);
+        }
 
         return ReportDetailResponse.builder()
                 .reportId(report.getReportId())
                 .carId(report.getCarId())
                 .inspectionId(report.getInspectionId())
                 .content(report.getContent())
-                .summary(summary)
-                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
+                .summary(report.getSummary())
+                .createdAt(report.getCreatedAt())
                 .workerId(report.getWorkerId())
                 .status(report.getStatus().name())
                 .build();
     }
+
+    // 다시 요약
+    @Transactional
+    public String reSummarize(Long reportId) {
+        Report report = reportRepository.findById(reportId)
+                .orElseThrow(ReportNotFoundException::new);
+
+        String newSummary = gptClient.summarize(report.getContent());
+        report.setSummary(newSummary);
+        return newSummary;
+    }
+
 
     public ReportListResponse findAllReports(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));

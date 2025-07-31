@@ -27,7 +27,7 @@ public class GptClient {
         Map<String, Object> requestBody = Map.of(
                 "model", "gpt-3.5-turbo",
                 "messages", List.of(
-                        Map.of("role", "system", "content", "다음 텍스트를 5줄로 간결하고 가독성 좋게 요약해줘."),
+                        Map.of("role", "system", "content", "다음 긴 차량 검사 보고서를 줄글 형태로 5줄 이내로 요약해줘. 핵심적인 이상 항목 위주로 간단히 정리해줘."),
                         Map.of("role", "user", "content", content)
                 ),
                 "temperature", 0.7

@@ -17,7 +17,7 @@ public class ReportSummary {
     private String carId;
     private String writer;     // 회원 부분과 연결 필요
     private Report.ReportType type;  // enum으로 임의 저장. 나중에 연결 필요
-    private String companyNumber;   // 회원 부분과 연결 필요
+    private Long workerId;
     private LocalDateTime createdAt;
 
     public static ReportSummary fromEntity(Report report) {
@@ -28,7 +28,7 @@ public class ReportSummary {
                 .carId(report.getCarId())
                 //.writer(report.getWriter())
                 .type(report.getType())
-                //.companyNumber(report.getCompanyNumber())
+                .workerId(report.getWorkerId())
                 .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .build();
     }

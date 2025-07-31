@@ -31,7 +31,8 @@ public class ReportDetailResponse {
                 .carId(report.getCarId())
                 .inspectionId(report.getInspectionId())
                 .content(report.getContent())
-                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
+                .summary(report.getSummary())
+                .createdAt(report.getCreatedAt())
                 .workerId(report.getWorkerId())
                 .status(report.getStatus().name())
                 .build();

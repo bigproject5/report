@@ -5,6 +5,7 @@ import aivle.project.report.dto.request.ReportCreateRequest;
 import aivle.project.report.dto.response.ReportDetailResponse;
 import aivle.project.report.dto.response.ReportListResponse;
 import aivle.project.report.dto.response.ReportSummary;
+import aivle.project.report.dto.response.ReportSummaryRequest;
 import aivle.project.report.repository.ReportRepository;
 import aivle.project.report.service.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -48,6 +50,17 @@ public class ReportController {
                 "code", "SUCCESS",
                 "data", response
         ));
+    }
+
+    // gpt 다시 요약
+    @PatchMapping("/reports/{reportId}/resummarize")
+    public ResponseEntity<Map<String, String>> reSummarize(@PathVariable Long reportId) {
+        String updatedSummary = reportService.reSummarize(reportId);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("summary", updatedSummary);
+
+        return ResponseEntity.ok(response);
     }
 
 

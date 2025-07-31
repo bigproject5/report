@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reports")
-@Getter
+@Getter  @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -29,6 +29,9 @@ public class Report {
     private LocalDateTime createdAt;
 
     private Long workerId;
+
+    @Column(columnDefinition = "TEXT")
+    private String summary;
 
     @Enumerated(EnumType.STRING)
     private Status status;
