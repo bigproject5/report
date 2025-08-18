@@ -19,7 +19,7 @@ public class ReportSummary {
     private String workerName;     // 회원 부분과 연결 필요
     private InspectionType type;  // enum으로 임의 저장. 나중에 연결 필요
     private Long workerId;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     public static ReportSummary fromEntity(Report report) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -30,7 +30,7 @@ public class ReportSummary {
                 //.workername(report.getWorkername())
                 .type(report.getType())
                 .workerId(report.getWorkerId())
-                .createdAt(report.getCreatedAt())
+                .createdAt(LocalDate.from(report.getCreatedAt()))
                 .build();
     }
 }

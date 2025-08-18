@@ -4,6 +4,7 @@ import aivle.project.report.domain.Report;
 import aivle.project.report.dto.request.WorkerTaskCompletedEventDTO;
 import aivle.project.report.dto.response.ReportDetailResponse;
 import aivle.project.report.dto.response.ReportListResponse;
+import aivle.project.report.dto.response.ReportSummary;
 import aivle.project.report.repository.ReportRepository;
 import aivle.project.report.service.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -69,4 +71,16 @@ public class ReportController {
         ));
     }
 
+    @GetMapping("/worker-reports")
+    public ResponseEntity<List<ReportSummary>> getAllWorkerReports(@RequestHeader("X-User-Id") String userId) {
+        Long workerId = Long.valueOf(userId);
+        List<ReportSummary> response = reportService.getWorkerReport(workerId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/worker-reports/{workerId}")
+    public ResponseEntity<List<ReportSummary>> getAllWorkerReports(@PathVariable Long workerId) {
+        List<ReportSummary> response = reportService.getWorkerReport(workerId);
+        return ResponseEntity.ok(response);
+    }
 }

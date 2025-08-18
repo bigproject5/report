@@ -15,6 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ReportService {
@@ -101,6 +104,12 @@ public class ReportService {
                 .size(reportsPage.getSize())
                 .total(reportsPage.getTotalElements())
                 .build();
+    }
+
+    public List<ReportSummary> getWorkerReport(Long workerId){
+        List<Report> reports = reportRepository.findByWorkerId(workerId);
+        return reports.stream().map(ReportSummary::fromEntity).toList();
+
     }
 }
 
