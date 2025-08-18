@@ -17,24 +17,29 @@ import java.time.ZoneId;
 @Builder
 public class ReportDetailResponse {
     private Long reportId;
-    private String carId;
+    private Long auditId;
     private Long inspectionId;
-    private String content;
+    private String resolve;
     private String summary;
     private LocalDateTime createdAt;
     private Long workerId;
-    private String status;
+    private String workerName;
+    private String type;              // InspectionType
+    private LocalDateTime startedAt;
+    private LocalDateTime endedAt;
 
     public static ReportDetailResponse fromEntity(Report report) {
         return ReportDetailResponse.builder()
                 .reportId(report.getReportId())
-                .carId(report.getCarId())
+                .auditId(report.getAuditId())
                 .inspectionId(report.getInspectionId())
-                .content(report.getContent())
+                .resolve(report.getResolve()) // 가공된 문장
                 .summary(report.getSummary())
                 .createdAt(report.getCreatedAt())
                 .workerId(report.getWorkerId())
-                .status(report.getStatus().name())
+                .type(report.getType().name())
+                .startedAt(report.getStartedAt())
+                .endedAt(report.getEndedAt())
                 .build();
     }
 }

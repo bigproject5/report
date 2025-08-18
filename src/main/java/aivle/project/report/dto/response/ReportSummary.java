@@ -1,6 +1,7 @@
 package aivle.project.report.dto.response;
 
 import aivle.project.report.domain.Report;
+import aivle.project.report.domain.enumerate.InspectionType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,9 +15,9 @@ import java.time.format.DateTimeFormatter;
 @Builder
 public class ReportSummary {
     private Long reportId;
-    private String carId;
-    private String writer;     // 회원 부분과 연결 필요
-    private Report.ReportType type;  // enum으로 임의 저장. 나중에 연결 필요
+    private Long auditId;
+    private String workerName;     // 회원 부분과 연결 필요
+    private InspectionType type;  // enum으로 임의 저장. 나중에 연결 필요
     private Long workerId;
     private LocalDateTime createdAt;
 
@@ -25,11 +26,11 @@ public class ReportSummary {
 
         return ReportSummary.builder()
                 .reportId(report.getReportId())
-                .carId(report.getCarId())
-                //.writer(report.getWriter())
+                .auditId(report.getAuditId())
+                //.workername(report.getWorkername())
                 .type(report.getType())
                 .workerId(report.getWorkerId())
-                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
+                .createdAt(report.getCreatedAt())
                 .build();
     }
 }

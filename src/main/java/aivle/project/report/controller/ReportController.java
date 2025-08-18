@@ -1,21 +1,15 @@
 package aivle.project.report.controller;
 
 import aivle.project.report.domain.Report;
-import aivle.project.report.dto.request.ReportCreateRequest;
+import aivle.project.report.dto.request.WorkerTaskCompletedEventDTO;
 import aivle.project.report.dto.response.ReportDetailResponse;
 import aivle.project.report.dto.response.ReportListResponse;
-import aivle.project.report.dto.response.ReportSummary;
-import aivle.project.report.dto.response.ReportSummaryRequest;
 import aivle.project.report.repository.ReportRepository;
 import aivle.project.report.service.ReportService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,20 +60,13 @@ public class ReportController {
 
     // 임시 테스트용
     @PostMapping("/reports")
-    public ResponseEntity<?> createDummyReport(@RequestBody ReportCreateRequest request) {
-        Report report = Report.builder()
-                .carId(request.getCarId())
-                .inspectionId(request.getInspectionId())
-                .content(request.getContent())
-                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
-                .workerId(request.getWorkerId())
-                .type(request.getType())
-                .status(Report.Status.CREATED) // 혹은 SAVED
-                .build();
+    public ResponseEntity<?> createReport(@RequestBody WorkerTaskCompletedEventDTO request) {
+        Report savedReport = reportService.saveReportWithGpt(request);
 
-        Report savedReport = reportRepository.save(report);
-
-        return ResponseEntity.ok(Map.of("reportId", savedReport.getReportId(), "code", "SUCCESS"));
+        return ResponseEntity.ok(Map.of(
+                "reportId", savedReport.getReportId(),
+                "code", "SUCCESS"
+        ));
     }
 
 }
