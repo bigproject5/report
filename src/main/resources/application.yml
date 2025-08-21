@@ -34,4 +34,4 @@ spring:
 
 openai:
   api:
-    key: ${OPENAI_KEY}
+    key:

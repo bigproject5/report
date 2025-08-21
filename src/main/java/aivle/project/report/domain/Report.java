@@ -28,11 +28,7 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private InspectionType type;
 
-    // 작업자 원본 입력 값
-    @Column(columnDefinition = "TEXT")
-    private String rawContent;
 
-    // 정돈된 문장
     @Column(columnDefinition = "TEXT")
     private String resolve;
 
@@ -55,5 +51,16 @@ public class Report {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
+
+    private String workerName;        // 작업자 이름
+
+    @Column(columnDefinition = "TEXT")
+    private String aiSuggestion;      // AI 조치제안
+
+    @Column(columnDefinition = "TEXT")
+    private String diagnosisResult;   // 검사결과
+
+    @Column(columnDefinition = "TEXT")
+    private String resultDataPath;    // 결과데이터 사진 경로
 }
 

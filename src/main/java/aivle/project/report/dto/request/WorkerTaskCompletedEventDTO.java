@@ -18,5 +18,8 @@ public class WorkerTaskCompletedEventDTO {
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;
     private String type;
+    private String aiSuggestion;      // AI 조치제안
+    private String diagnosisResult;   // 검사결과
+    private String resultDataPath;    // 결과데이터 사진 경로
 }
 
