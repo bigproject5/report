@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Entity
-@Table(name = "reports")
-@Getter  @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder

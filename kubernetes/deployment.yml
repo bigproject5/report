@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: report-deployment
+  labels:
+    app: report
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: report
+  template:
+    metadata:
+      labels:
+        app: report
+    spec:
+      containers:
+      - name: report-service
+        image: 956463122808.dkr.ecr.ap-northeast-2.amazonaws.com/taskreport:v2
+        ports:
+        - containerPort: 8080
+        env:
+          - name: DB_URL
+            valueFrom:
+              secretKeyRef:
+                name: operation-secrets
+                key: db.url.rp
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: operation-secrets
+                key: db.username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: operation-secrets
+                key: db.password
+          - name: KAFKA_BOOTSTRAP_SERVERS
+            valueFrom:
+              secretKeyRef:
+                name: operation-secrets
+                key: kafka.bootstrap.server
+          - name: OPENAI_KEY
+            valueFrom:
+              secretKeyRef:
+                name: operation-secrets
+                key: openai.apiKey
