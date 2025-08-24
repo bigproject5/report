@@ -1,6 +1,7 @@
 package aivle.project.report.domain;
 
 import aivle.project.report.domain.enumerate.InspectionType;
+import aivle.project.report.dto.request.WorkerTaskCompletedEventDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.persistence.Id;
@@ -24,6 +25,7 @@ public class Report {
 
     private Long inspectionId;
     private Long workerId;
+    private String workerName;
 
     @Enumerated(EnumType.STRING)
     private InspectionType type;
@@ -54,6 +56,21 @@ public class Report {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+    }
+
+    public static Report toEntity(WorkerTaskCompletedEventDTO dto, String refinedContent, String summary, InspectionType type) {
+        return Report.builder()
+                .auditId(dto.getAuditId())
+                .inspectionId(dto.getInspectionId())
+                .workerId(dto.getWorkerId())
+                .workerName(dto.getWorkerName())
+                .rawContent(dto.getResolve())
+                .resolve(refinedContent)
+                .summary(summary)
+                .type(type)
+                .startedAt(dto.getStartedAt())
+                .endedAt(dto.getEndedAt())
+                .build();
     }
 }
 

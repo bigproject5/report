@@ -36,18 +36,7 @@ public class ReportService {
             reportRepository.save(report);
         }
 
-        return ReportDetailResponse.builder()
-                .reportId(report.getReportId())
-                .auditId(report.getAuditId())
-                .inspectionId(report.getInspectionId())
-                .resolve(report.getResolve())
-                .summary(report.getSummary())
-                .createdAt(report.getCreatedAt())
-                .workerId(report.getWorkerId())
-                .type(report.getType().name())
-                .startedAt(report.getStartedAt())
-                .endedAt(report.getEndedAt())
-                .build();
+        return ReportDetailResponse.fromEntity(report);
     }
 
 
@@ -62,19 +51,7 @@ public class ReportService {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("유효하지 않은 type 값입니다.");
         }
-
-        Report report = Report.builder()
-                .auditId(request.getAuditId())
-                .inspectionId(request.getInspectionId())
-                .workerId(request.getWorkerId())
-                .rawContent(request.getResolve())
-                .resolve(refinedContent)
-                .summary(summary)
-                .startedAt(request.getStartedAt())
-                .endedAt(request.getEndedAt())
-                .type(type)
-                .build();
-
+        Report report = Report.toEntity(request, refinedContent, summary, type);
         return reportRepository.save(report);
     }
 
@@ -101,6 +78,25 @@ public class ReportService {
                 .size(reportsPage.getSize())
                 .total(reportsPage.getTotalElements())
                 .build();
+    }
+
+    public static String maskName(String name) {
+        if (name == null || name.isEmpty()) {
+            return "";
+        }
+        int length = name.length();
+
+        if (length == 1) {
+            return name;
+        } else if (length == 2) {
+            return name.charAt(0) + "*";
+        } else {
+            String firstName = name.substring(0, 1);
+            String lastName = name.substring(length - 1);
+            String middleMask = "*".repeat(length - 2); // Java 11+
+
+            return firstName + middleMask + lastName;
+        }
     }
 }
 

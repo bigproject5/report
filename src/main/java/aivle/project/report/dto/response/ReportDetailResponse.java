@@ -1,6 +1,7 @@
 package aivle.project.report.dto.response;
 
 import aivle.project.report.domain.Report;
+import aivle.project.report.service.ReportService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,11 +25,12 @@ public class ReportDetailResponse {
     private LocalDateTime createdAt;
     private Long workerId;
     private String workerName;
-    private String type;              // InspectionType
+    private String type;
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;
 
     public static ReportDetailResponse fromEntity(Report report) {
+        String name = ReportService.maskName(report.getWorkerName());
         return ReportDetailResponse.builder()
                 .reportId(report.getReportId())
                 .auditId(report.getAuditId())
@@ -39,6 +41,7 @@ public class ReportDetailResponse {
                 .workerId(report.getWorkerId())
                 .type(report.getType().name())
                 .startedAt(report.getStartedAt())
+                .workerName(name)
                 .endedAt(report.getEndedAt())
                 .build();
     }
