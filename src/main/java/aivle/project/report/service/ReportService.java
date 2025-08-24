@@ -10,6 +10,7 @@ import aivle.project.report.exception.ReportNotFoundException;
 import aivle.project.report.repository.ReportRepository;
 import aivle.project.report.util.GptClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -67,17 +68,11 @@ public class ReportService {
     }
 
 
-    public ReportListResponse findAllReports(int page, int size) {
+    public Page<ReportSummary> findAllReports(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        var reportsPage = reportRepository.findAll(pageRequest)
-                .map(ReportSummary::fromEntity);
 
-        return ReportListResponse.builder()
-                .reports(reportsPage.getContent())
-                .page(reportsPage.getNumber() + 1)
-                .size(reportsPage.getSize())
-                .total(reportsPage.getTotalElements())
-                .build();
+        return reportRepository.findAll(pageRequest)
+                .map(ReportSummary::fromEntity);
     }
 
     public static String maskName(String name) {

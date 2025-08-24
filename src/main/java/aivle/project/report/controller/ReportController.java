@@ -4,9 +4,11 @@ import aivle.project.report.domain.Report;
 import aivle.project.report.dto.request.WorkerTaskCompletedEventDTO;
 import aivle.project.report.dto.response.ReportDetailResponse;
 import aivle.project.report.dto.response.ReportListResponse;
+import aivle.project.report.dto.response.ReportSummary;
 import aivle.project.report.repository.ReportRepository;
 import aivle.project.report.service.ReportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +40,7 @@ public class ReportController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        ReportListResponse response = reportService.findAllReports(page, size);
+        Page<ReportSummary> response = reportService.findAllReports(page, size);
 
         return ResponseEntity.ok(Map.of(
                 "code", "SUCCESS",
