@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: report-service
-        image: 956463122808.dkr.ecr.ap-northeast-2.amazonaws.com/taskreport:v2
+        image: #도커 이미지
         ports:
         - containerPort: 8080
         env:
