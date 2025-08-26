@@ -30,6 +30,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+        spring.json.type.mapping: "aivle.project.vehicleAudit.event.WorkerTaskCompletedEventDTO:aivle.project.report.dto.request.WorkerTaskCompletedEventDTO"
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -37,5 +38,3 @@ spring:
 openai:
   api:
     key: ${OPENAI_KEY}
-
-
