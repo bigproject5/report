@@ -38,7 +38,7 @@ pipeline {
         AWS_ACCOUNT_ID      = "956463122808"
         AWS_DEFAULT_REGION  = "ap-northeast-2"
         ECR_REPOSITORY_NAME = "taskreport"
-        K8S_DEPLOYMENT_NAME = "report-deployment"
+        K8S_DEPLOYMENT_NAME = "taskreport"
         K8S_NAMESPACE       = "default"
         ECR_IMAGE_URI       = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}"
         EKS_CLUSTER_NAME    = "aivle-5-eks"

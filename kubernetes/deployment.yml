@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: report-deployment
+  name: taskreport
   labels:
-    app: report
+    app: taskreport
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: report
+      app: taskreport
   template:
     metadata:
       labels:
-        app: report
+        app: taskreport
     spec:
       containers:
-      - name: report-service
-        image: #도커 이미지
+      - name: taskreport
+        image: 956463122808.dkr.ecr.ap-northeast-2.amazonaws.com/taskreport:build-8
         ports:
         - containerPort: 8080
         env:
