@@ -15,8 +15,8 @@ spec:
         app: report
     spec:
       containers:
-      - name: report-service
-        image: #도커 이미지
+      - name: taskreport
+        image: 956463122808.dkr.ecr.ap-northeast-2.amazonaws.com/taskreport:v2
         ports:
         - containerPort: 8080
         env:
@@ -45,3 +45,4 @@ spec:
               secretKeyRef:
                 name: operation-secrets
                 key: openai.apiKey
+
