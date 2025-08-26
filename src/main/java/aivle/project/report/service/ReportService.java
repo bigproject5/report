@@ -127,19 +127,14 @@ public class ReportService {
 
         return reportRepository.findAll(pageRequest)
                 .map(ReportSummary::fromEntity);
-
-        return ReportListResponse.builder()
-                .reports(reportsPage.getContent())
-                .page(reportsPage.getNumber() + 1)
-                .size(reportsPage.getSize())
-                .total(reportsPage.getTotalElements())
-                .build();
     }
 
     public List<ReportSummary> getWorkerReport(Long workerId) {
         List<Report> reports = reportRepository.findByWorkerId(workerId);
         return reports.stream().map(ReportSummary::fromEntity).toList();
     }
+
+
     public static String maskName(String name) {
         if (name == null || name.isEmpty()) {
             return "";
