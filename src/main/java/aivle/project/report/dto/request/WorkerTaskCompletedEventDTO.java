@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkerTaskCompletedEventDTO {
-    private Long auditId;
     private String workerName;
+    private String resolve; // 조치사항 등
+    private Long auditId;
     private Long inspectionId;
-    private String resolve;
     private Long workerId;
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;

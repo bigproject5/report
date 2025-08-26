@@ -1,6 +1,7 @@
 package aivle.project.report.dto.response;
 
 import aivle.project.report.domain.Report;
+import aivle.project.report.service.ReportService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class ReportDetailResponse {
     private LocalDateTime createdAt;
     private Long workerId;
     private String workerName;
-    private String type;              // InspectionType
+    private String type;
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;
     private String aiSuggestion;      // AI 조치제안
@@ -33,6 +34,7 @@ public class ReportDetailResponse {
 
 
     public static ReportDetailResponse fromEntity(Report report) {
+        String name = ReportService.maskName(report.getWorkerName());
         return ReportDetailResponse.builder()
                 .reportId(report.getReportId())
                 .auditId(report.getAuditId())
@@ -44,6 +46,7 @@ public class ReportDetailResponse {
                 .workerName(report.getWorkerName())
                 .type(report.getType().name())
                 .startedAt(report.getStartedAt())
+                .workerName(name)
                 .endedAt(report.getEndedAt())
                 .aiSuggestion(report.getAiSuggestion())    // 추가
                 .diagnosisResult(report.getDiagnosisResult()) // 추가

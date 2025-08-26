@@ -1,6 +1,7 @@
 package aivle.project.report.domain;
 
 import aivle.project.report.domain.enumerate.InspectionType;
+import aivle.project.report.dto.request.WorkerTaskCompletedEventDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.persistence.Id;
@@ -9,8 +10,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Entity
-@Table(name = "reports")
-@Getter  @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -62,5 +63,19 @@ public class Report {
 
     @Column(columnDefinition = "TEXT")
     private String resultDataPath;    // 결과데이터 사진 경로
+
+    public static Report toEntity(WorkerTaskCompletedEventDTO dto, String refinedContent, String summary, InspectionType type) {
+        return Report.builder()
+                .auditId(dto.getAuditId())
+                .inspectionId(dto.getInspectionId())
+                .workerId(dto.getWorkerId())
+                .workerName(dto.getWorkerName())
+                .resolve(refinedContent)
+                .summary(summary)
+                .type(type)
+                .startedAt(dto.getStartedAt())
+                .endedAt(dto.getEndedAt())
+                .build();
+    }
 }
 

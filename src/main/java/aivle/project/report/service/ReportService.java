@@ -11,6 +11,7 @@ import aivle.project.report.repository.ReportRepository;
 import aivle.project.report.util.GptClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -121,9 +122,10 @@ public class ReportService {
         return newSummary;
     }
 
-    public ReportListResponse findAllReports(int page, int size) {
+    public Page<ReportSummary> findAllReports(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        var reportsPage = reportRepository.findAll(pageRequest)
+
+        return reportRepository.findAll(pageRequest)
                 .map(ReportSummary::fromEntity);
 
         return ReportListResponse.builder()
@@ -137,5 +139,23 @@ public class ReportService {
     public List<ReportSummary> getWorkerReport(Long workerId) {
         List<Report> reports = reportRepository.findByWorkerId(workerId);
         return reports.stream().map(ReportSummary::fromEntity).toList();
+    }
+    public static String maskName(String name) {
+        if (name == null || name.isEmpty()) {
+            return "";
+        }
+        int length = name.length();
+
+        if (length == 1) {
+            return name;
+        } else if (length == 2) {
+            return name.charAt(0) + "*";
+        } else {
+            String firstName = name.substring(0, 1);
+            String lastName = name.substring(length - 1);
+            String middleMask = "*".repeat(length - 2); // Java 11+
+
+            return firstName + middleMask + lastName;
+        }
     }
 }
