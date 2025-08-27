@@ -29,6 +29,7 @@ spring:
         spring.json.trusted.packages: "*"
         spring.json.use.type.headers: false
         spring.json.value.default.type: aivle.project.report.dto.request.WorkerTaskCompletedEventDTO
+        spring.json.type.mapping: "aivle.project.vehicleAudit.event.WorkerTaskCompletedEventDTO:aivle.project.report.dto.request.WorkerTaskCompletedEventDTO"
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
