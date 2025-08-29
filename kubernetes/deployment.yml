@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: taskreport
-        image: 956463122808.dkr.ecr.ap-northeast-2.amazonaws.com/taskreport:build-8
+        image: 956463122808.dkr.ecr.ap-northeast-2.amazonaws.com/taskreport:build-19
         resources:
           requests:
             cpu: 100m
